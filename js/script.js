@@ -1,5 +1,6 @@
 let likeCount = 0;
 let curtido = false; // flag booleana
+let descurtir = false;
 
 function curtir() { 
   if(curtido == false){
@@ -9,6 +10,22 @@ function curtir() {
   } else{
     likeCount--;
     curtido = false;
+  document.getElementById("likeCount").innerText = likeCount;
+
+  }
+
+
+
+}
+
+function descurtir() { 
+  if(descurtido == false){
+    likeCount++;
+    descurtido = true;
+  document.getElementById("likeCount").innerText = likeCount;
+  } else{
+    likeCount--;
+    descurtido = false;
   document.getElementById("likeCount").innerText = likeCount;
 
   }
