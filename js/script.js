@@ -1,14 +1,18 @@
+//===ESTADO (dados da aplicação) ===
+
 let likeCount = 0;
 let curtido = false; // flag booleana
 let deslikeCount = 0;
 let descurtido = false; // flag booleana
 
+//=== SERVICE (regras de negócio) ===
 
 function curtir() { 
   if(curtido == false){
     likeCount++;
     curtido = true;
   document.getElementById("likeCount").innerText = likeCount;
+
   } else{
     likeCount--;
     curtido = false;
@@ -36,5 +40,14 @@ function descurtir() {
 
 }
 
-document.getElementById("likeBtn").addEventListener("click", curtir);
-document.getElementById("deslikeBtn").addEventListener("click", descurtir);
+//=== CONTROLLER (intermediação)===
+function clicarCurtir(){
+  curtir ();
+}
+function clicarDescurtir(){
+  descurtir ();
+}
+
+//=== EVENTOS ===
+document.getElementById("likeBtn").addEventListener("click", clicarCurtir);
+document.getElementById("deslikeBtn").addEventListener("click", clicarDescurtir);
