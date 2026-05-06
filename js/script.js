@@ -1,53 +1,85 @@
-//===ESTADO (dados da aplicação) ===
+//=== BANCO DE DADOS (JSON Simulado) === 
 
-let likeCount = 0;
-let curtido = false; // flag booleana
-let deslikeCount = 0;
-let descurtido = false; // flag booleana
+let post ={
+  likeCount: 0,
+  dislikeCount: 0,
+  curtido: false,
+  descurtido: false
+}
 
-//=== SERVICE (regras de negócio) ===
+//=== SERVICE (regras de negócio) === 
 
-function curtir() { 
-  if(curtido == false){
-    likeCount++;
-    curtido = true;
-  document.getElementById("likeCount").innerText = likeCount;
+function curtir() {
+  if (post.curtido == false){
+    post.likeCount++;
+    post.curtido = true;
 
-  } else{
-    likeCount--;
-    curtido = false;
-  document.getElementById("likeCount").innerText = likeCount;
+    if(post.descurtido == true){
+      post.dislikeCount--;
+      post.descurtido = false;
+    }
 
+  }else{
+    post.likeCount--;
+    post.curtido = false;
   }
-
-
 
 }
 
-function descurtir() { 
-  if(descurtido == false){
-    deslikeCount++;
-    descurtido = true;
-  document.getElementById("deslikeCount").innerText = deslikeCount;
-  } else{
-    deslikeCount--;
-    descurtido = false;
-  document.getElementById("deslikeCount").innerText = deslikeCount;
+function descurtir() {
+  if(post.descurtido == false){
+    post.dislikeCount++;
+    post.descurtido = true;
+
+    if(post.curtido == true){
+      post.likeCount--;
+      post.curtido = false;
+    }
 
   }
+  else{
+    post.dislikeCount--;
+    post.descurtido = false;
+  }
+}
 
+//=== API SIMULADA ===
 
+function getPost(){
+  return post;
+}
 
+function likepost(){
+  curtir();
+  return post;
+}
+function dislikepost(){
+  descurtir();
+  return post;
+}
+
+// === VIEW (interface/renderização)===
+function atualizarTela(){
+  document.getElementById("likeCount").innerText = likeCount;
+  document.getElementById("dislikeCount").innerText = dislikeCount;
 }
 
 //=== CONTROLLER (intermediação)===
+
 function clicarCurtir(){
-  curtir ();
+  curtir();
+  atualizarTela();
 }
 function clicarDescurtir(){
-  descurtir ();
+  descurtir();
+  atualizarTela();
 }
 
-//=== EVENTOS ===
+// === EVENTOS ===
+
 document.getElementById("likeBtn").addEventListener("click", clicarCurtir);
-document.getElementById("deslikeBtn").addEventListener("click", clicarDescurtir);
+document.getElementById("dislikeBtn").addEventListener("click", clicarDescurtir);
+
+// === INICIALIZAÇÃO ===  
+
+atualizarTela();
